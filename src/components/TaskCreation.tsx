@@ -8,7 +8,7 @@ import { Label } from './ui/label';
 import { Alert, AlertDescription } from './ui/alert';
 import { Aircraft, User, Task } from '../types';
 import { Plus, CheckCircle } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface TaskCreationProps {
   aircraft: Aircraft[];

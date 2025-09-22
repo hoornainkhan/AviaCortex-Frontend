@@ -9,7 +9,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Task, Aircraft } from '../types';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { ArrowLeft, CheckCircle, X, Eye, Calendar, User, AlertTriangle } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface TaskVerificationProps {
   task: Task;

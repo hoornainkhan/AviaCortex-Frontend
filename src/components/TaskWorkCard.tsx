@@ -8,7 +8,7 @@ import { Alert, AlertDescription } from './ui/alert';
 import { Task, Aircraft } from '../types';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Camera, Upload, CheckCircle, AlertTriangle, ArrowLeft, Plane, Calendar, User } from 'lucide-react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 
 interface TaskWorkCardProps {
   task: Task;

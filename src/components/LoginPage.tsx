@@ -1,36 +1,64 @@
-import { useState } from 'react';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Label } from './ui/label';
-import { Alert, AlertDescription } from './ui/alert';
-import { User } from '../types';
-import logo from '../components/ui/logo.jpeg';
-import { mockUsers } from '../data/mockData';
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Label } from "./ui/label";
+import { Alert, AlertDescription } from "./ui/alert";
+import { User } from "../types";
+import logo from "../components/ui/logo.jpeg";
+import { mockUsers } from "../data/mockData";
 
 interface LoginPageProps {
   onLogin: (user: User) => void;
 }
 
 export function LoginPage({ onLogin }: LoginPageProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
 
     // Simple mock authentication
-    const user = mockUsers.find(u => u.email === email);
+    let user = mockUsers.find((u) => u.email === email);
+
+    // Allow admin login for alice@aviacortex.com with any 6+ char password
+    if (email === "alice@aviacortex.com" && password.length >= 6) {
+      // If not present in mockUsers, create a user object for admin
+      if (!user) {
+        user = {
+          id: "admin",
+          name: "Alice Smith",
+          employeeId: "E001",
+          email: "alice@aviacortex.com",
+          role: "admin",
+          status: "Active",
+        };
+      }
+      onLogin({ ...user, role: "admin" });
+      return;
+    }
+
     if (!user) {
-      setError('Invalid credentials. Please contact your System Administrator.');
+      setError(
+        "Invalid credentials. Please contact your System Administrator."
+      );
       return;
     }
 
     // In a real app, password would be validated here
     if (password.length < 6) {
-      setError('Invalid credentials. Please contact your System Administrator.');
+      setError(
+        "Invalid credentials. Please contact your System Administrator."
+      );
       return;
     }
 
@@ -43,7 +71,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
             <div className="w-16 h-12 bg-primary rounded-lg flex items-center justify-center">
-              <img src={logo} alt="Aviacortex Logo" className="object-contain w-16 h-12" />
+              <img
+                src={logo}
+                alt="Aviacortex Logo"
+                className="object-contain w-16 h-12"
+              />
             </div>
           </div>
           <CardTitle className="text-2xl">Aircraft Management System</CardTitle>
@@ -85,12 +117,25 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             </Button>
           </form>
           <div className="mt-6 p-4 bg-muted rounded-lg">
-            <p className="text-sm text-muted-foreground mb-2">Demo Credentials:</p>
+            <p className="text-sm text-muted-foreground mb-2">
+              Demo Credentials:
+            </p>
             <div className="space-y-1 text-xs">
-              <p><strong>Manager:</strong> j.smith@airline.com</p>
-              <p><strong>Engineer:</strong> s.johnson@airline.com</p>
-              <p><strong>Pilot:</strong> c.williams@airline.com</p>
-              <p><strong>Password:</strong> Any 6+ characters</p>
+              <p>
+                <strong>Manager:</strong> j.smith@airline.com
+              </p>
+              <p>
+                <strong>Engineer:</strong> s.johnson@airline.com
+              </p>
+              <p>
+                <strong>Pilot:</strong> c.williams@airline.com
+              </p>
+              <p>
+                <strong>Admin:</strong> alice@aviacortex.com
+              </p>
+              <p>
+                <strong>Password:</strong> Any 6+ characters
+              </p>
             </div>
           </div>
         </CardContent>

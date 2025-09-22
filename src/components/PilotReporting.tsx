@@ -1,26 +1,13 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
-import { Button } from "./ui/button";
-import { Textarea } from "./ui/textarea";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
-import { Label } from "./ui/label";
-import { Alert, AlertDescription } from "./ui/alert";
-import { Flight, PilotReport } from "../types";
-import {
-  Plane,
-  Calendar,
-  MapPin,
-  CheckCircle,
-  AlertTriangle,
-  ArrowLeft,
-} from "lucide-react";
-import { toast } from "sonner@2.0.3";
+import { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { Button } from './ui/button';
+import { Textarea } from './ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Label } from './ui/label';
+import { Alert, AlertDescription } from './ui/alert';
+import { Flight, PilotReport } from '../types';
+import { Plane, Calendar, MapPin, CheckCircle, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface PilotReportingProps {
   flights: Flight[];
@@ -29,15 +16,10 @@ interface PilotReportingProps {
   onBack?: () => void;
 }
 
-export function PilotReporting({
-  flights,
-  pilotId,
-  onSubmitReport,
-  onBack,
-}: PilotReportingProps) {
-  const [tailNumber, setTailNumber] = useState("");
-  const [reportDetails, setReportDetails] = useState("");
-  const [severity, setSeverity] = useState<"low" | "medium" | "high">("low");
+export function PilotReporting({ flights, pilotId, onSubmitReport, onBack }: PilotReportingProps) {
+  const [tailNumber, setTailNumber] = useState('');
+  const [reportDetails, setReportDetails] = useState('');
+  const [severity, setSeverity] = useState<'low' | 'medium' | 'high'>('low');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -46,31 +28,29 @@ export function PilotReporting({
     setIsSubmitting(true);
 
     // Simulate submission delay
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const newReport: Partial<PilotReport> = {
       id: `PR${Date.now()}`,
       aircraftId: tailNumber,
-      date: new Date().toISOString().split("T")[0],
+      date: new Date().toISOString().split('T')[0],
       pilot: pilotId, // Use pilotId directly
       issue: reportDetails,
       severity,
-      status: "open",
+      status: 'open'
     };
 
     onSubmitReport(newReport);
-
-    toast.success(
-      "Report submitted successfully. Maintenance team has been notified."
-    );
+    
+    toast.success('Report submitted successfully. Maintenance team has been notified.');
     setShowSuccess(true);
     setIsSubmitting(false);
 
     // Reset form after success
     setTimeout(() => {
-      setTailNumber("");
-      setReportDetails("");
-      setSeverity("low");
+      setTailNumber('');
+      setReportDetails('');
+      setSeverity('low');
       setShowSuccess(false);
     }, 2000);
   };
@@ -79,14 +59,10 @@ export function PilotReporting({
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case "low":
-        return "bg-blue-500/10 text-blue-500 border-blue-500/20";
-      case "medium":
-        return "bg-amber-500/10 text-amber-500 border-amber-500/20";
-      case "high":
-        return "bg-red-500/10 text-red-500 border-red-500/20";
-      default:
-        return "bg-muted text-muted-foreground";
+      case 'low': return 'bg-blue-500/10 text-blue-500 border-blue-500/20';
+      case 'medium': return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
+      case 'high': return 'bg-red-500/10 text-red-500 border-red-500/20';
+      default: return 'bg-muted text-muted-foreground';
     }
   };
 
@@ -101,10 +77,7 @@ export function PilotReporting({
         )}
         <div>
           <h1 className="text-3xl font-semibold">Submit Post-Flight Report</h1>
-          <p className="text-muted-foreground">
-            Report any maintenance issues or observations from your recent
-            flights
-          </p>
+          <p className="text-muted-foreground">Report any maintenance issues or observations from your recent flights</p>
         </div>
       </div>
 
@@ -112,8 +85,7 @@ export function PilotReporting({
         <Alert className="border-green-500/20 bg-green-500/10">
           <CheckCircle className="h-4 w-4 text-green-500" />
           <AlertDescription className="text-green-500">
-            Report submitted successfully. The maintenance team has been
-            notified and will investigate promptly.
+            Report submitted successfully. The maintenance team has been notified and will investigate promptly.
           </AlertDescription>
         </Alert>
       )}
@@ -132,7 +104,7 @@ export function PilotReporting({
                 id="tailNumber"
                 type="text"
                 value={tailNumber}
-                onChange={(e) => setTailNumber(e.target.value)}
+                onChange={e => setTailNumber(e.target.value)}
                 placeholder="Enter aircraft tail number (e.g., N12345)"
                 className="w-full border rounded px-3 py-2 text-sm"
                 required
@@ -142,12 +114,7 @@ export function PilotReporting({
             {/* Severity Level */}
             <div className="space-y-2">
               <Label htmlFor="severity">Issue Severity</Label>
-              <Select
-                value={severity}
-                onValueChange={(value: "low" | "medium" | "high") =>
-                  setSeverity(value)
-                }
-              >
+              <Select value={severity} onValueChange={(value: 'low' | 'medium' | 'high') => setSeverity(value)}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -192,8 +159,7 @@ export function PilotReporting({
               <Alert>
                 <AlertTriangle className="h-4 w-4" />
                 <AlertDescription>
-                  Please enter a tail number and provide report details before
-                  submitting.
+                  Please enter a tail number and provide report details before submitting.
                 </AlertDescription>
               </Alert>
             )}
@@ -205,7 +171,7 @@ export function PilotReporting({
                 disabled={!isFormValid || isSubmitting}
                 className="min-w-32"
               >
-                {isSubmitting ? "Submitting..." : "Submit Report"}
+                {isSubmitting ? 'Submitting...' : 'Submit Report'}
               </Button>
             </div>
           </form>
@@ -233,17 +199,9 @@ export function PilotReporting({
               <h4 className="font-medium mb-2">Important Notes:</h4>
               <ul className="space-y-1 text-muted-foreground ml-4">
                 <li>• All reports are confidential and non-punitive</li>
-                <li>
-                  • Reports are automatically linked to aircraft maintenance
-                  records
-                </li>
-                <li>
-                  • High severity reports trigger immediate maintenance
-                  notifications
-                </li>
-                <li>
-                  • Your report helps maintain fleet safety and reliability
-                </li>
+                <li>• Reports are automatically linked to aircraft maintenance records</li>
+                <li>• High severity reports trigger immediate maintenance notifications</li>
+                <li>• Your report helps maintain fleet safety and reliability</li>
               </ul>
             </div>
           </div>

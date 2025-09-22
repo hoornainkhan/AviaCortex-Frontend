@@ -46,8 +46,10 @@ export interface PilotReport {
 export interface User {
   id: string;
   name: string;
-  role: 'manager' | 'engineer' | 'pilot';
+  employeeId: string;
   email: string;
+  role: "engineer" | "manager" | "pilot" | "admin";
+  status: string;
 }
 
 export interface Task {
