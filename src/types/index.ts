@@ -76,3 +76,8 @@ export interface Flight {
   route: string;
   pilot: string;
 }
+
+// declare module '*.jpeg' {
+//   const value: string;
+//   export default value;
+// }

@@ -42,8 +42,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1 text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-primary rounded-lg flex items-center justify-center">
-              <img src={logo} alt="Aviacortex Logo" className="object-contain w-12 h-12" />
+            <div className="w-16 h-12 bg-primary rounded-lg flex items-center justify-center">
+              <img src={logo} alt="Aviacortex Logo" className="object-contain w-16 h-12" />
             </div>
           </div>
           <CardTitle className="text-2xl">Aircraft Management System</CardTitle>
